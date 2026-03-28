@@ -1,6 +1,23 @@
-# Bytewatch Stremio Addon
+# FORK OF Bytewatch Stremio Addon
+##Big thanks for original creator
 
-A Node.js-powered Stremio addon that scrapes multiple streaming sites using Puppeteer. It integrates them into the Stremio ecosystem through a single stream handler.
+##Za lokalno korišćenje
+
+-pokrenite start.cmd
+-idite na stremio - addon - U polju za pretragu addona kopirajte http://127.0.0.1:7000/manifest.json
+-instalirajte addon
+-crtace mozete naci u sekciji "otkri"
+-U tabu otkri umesto kategorije npr. "popularno" skrolujte i izaberite kategoriju "gledaj crtace"
+-U podkategoriji umesto "TOP" mozete, ali i ne morate izabrati Filmovi/Serije
+
+Ako zelite da hostujete mozete koristiti "Vercel" ili nešto slično, uputstva imate ispod na engleskom
+
+##VAZNO
+
+-addon je fajb kodovan, tkd ako nešto ne radi JBG :/
+-Nisam siguran da svi crtaci rade posebno oni stariji, tako da ponekad moze da bude hit or miss
+
+A Node.js-powered Stremio addon that scrapes https://gledajcrtace.org using Puppeteer. It integrates it into the Stremio ecosystem through a single stream handler.
 
 ---
 
@@ -10,7 +27,6 @@ A Node.js-powered Stremio addon that scrapes multiple streaming sites using Pupp
 - Real browser scraping via `puppeteer-real-browser`
 - Stremio addon-compatible manifest & stream handler
 - Caching using `node-cache`
-- Logging using `winston`
 
 ---
 
@@ -44,6 +60,9 @@ bytewatch-stremio-addon/
 
 ## Installation (Local Development)
 
+-Na ovom forku možete samo da pokrenete start.cmd kada klonirate respository I sve ostalo ce se srediti samo,
+-posle toga samo kopirate adresu u sremio addon
+
 1. **Clone the repository**
    ```bash
    git clone https://github.com/93bx/bytewatch-stremio-addon.git
@@ -61,7 +80,7 @@ bytewatch-stremio-addon/
    ```
 
 4. **Test locally**
-   Open your browser:
+   Open your browser: (najverivatnije ne radi preko browsera)
    ```
    http://localhost:7000/manifest.json
    ```
@@ -80,18 +99,12 @@ Note: if you want to load an addon by URL in Stremio, the URL must either be acc
 
 ## 🚀 Deploy Your Own Instance (One-Click)
 
-### Option 1: Deploy to Render (Recommended)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/93bx/bytewatch-stremio-addon)
-
-### Option 2: Deploy to Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F93bx%2Fbytewatch-stremio-addon)
-
 ### Manual Deployment Options
 
 #### Deploy to Render Manually
 1. Sign up at [render.com](https://render.com)
 2. Click "New Web Service"
-3. Click "Public Git Repository" and paste the Github link > [Github repo link](https://github.com/93bx/bytewatch-stremio-addon) 
+3. Click "Public Git Repository" and paste the Github link > (https://github.com/Stefma4Git/Gledaj-crtace-addon) 
 4. Set environment variable: `PORT = 10000`
 5. Deploy!
 
@@ -109,7 +122,7 @@ After deploying the app, paste the deployment URL in Stremio's searchbar to add 
 
 ## Notes
 
-- All scrapers are defined in `unified-extractor.js`.
+- the scraper is defined in `unified-extractor.js`.
 - Logs will print to console using Winston (with timestamp and levels).
 - Caching is in-memory using `node-cache` to improve performance and avoid repeat scraping.
 - Puppeteer requires a headless-compatible environment — avoid deploying on memory-constrained VMs without swap.
@@ -119,3 +132,4 @@ After deploying the app, paste the deployment URL in Stremio's searchbar to add 
 ## License
 
 ISC License. Use freely and modify as needed.
+-Ja nisam dodao/stavio licencu
