@@ -4,18 +4,28 @@
 ##Za lokalno korišćenje
 
 -pokrenite start.cmd
+
 -idite na stremio - addon - U polju za pretragu addona kopirajte http://127.0.0.1:7000/manifest.json
+
 -instalirajte addon
+
 -crtace mozete naci u sekciji "otkri"
+
 -U tabu otkri umesto kategorije npr. "popularno" skrolujte i izaberite kategoriju "gledaj crtace"
+
 -U podkategoriji umesto "TOP" mozete, ali i ne morate izabrati Filmovi/Serije
 
+
 Ako zelite da hostujete mozete koristiti "Vercel" ili nešto slično, uputstva imate ispod na engleskom
+
 
 ##VAZNO
 
 -addon je fajb kodovan, tkd ako nešto ne radi JBG :/
+
 -Nisam siguran da svi crtaci rade posebno oni stariji, tako da ponekad moze da bude hit or miss
+
+
 
 A Node.js-powered Stremio addon that scrapes https://gledajcrtace.org using Puppeteer. It integrates it into the Stremio ecosystem through a single stream handler.
 
