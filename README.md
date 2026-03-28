@@ -1,7 +1,7 @@
 # FORK OF Bytewatch Stremio Addon
-##Big thanks for original creator
+## Big thanks for original creator
 
-##Za lokalno korišćenje
+## Za lokalno korišćenje
 
 -pokrenite start.cmd
 
@@ -19,7 +19,7 @@
 Ako zelite da hostujete mozete koristiti "Vercel" ili nešto slično, uputstva imate ispod na engleskom
 
 
-##VAZNO
+## VAZNO
 
 -addon je fajb kodovan, tkd ako nešto ne radi JBG :/
 
