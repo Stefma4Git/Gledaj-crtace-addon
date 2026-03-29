@@ -1,4 +1,4 @@
-// unified-extractor.js - Fixed for Render
+// unified-extractor.js - Using Chromium for Render
 const realBrowser = require('puppeteer-real-browser');
 
 async function extractGledajCrtace(url) {
@@ -12,21 +12,26 @@ async function extractGledajCrtace(url) {
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
-                '--disable-accelerated-2d-canvas',
                 '--disable-gpu',
-                '--window-size=1920,1080'
+                '--window-size=1920,1080',
+                '--disable-web-security'
             ]
         };
 
-        // Try to use CHROME_PATH if set
+        // Try Chromium path first
         if (process.env.CHROME_PATH) {
             connectOptions.customConfig = {
                 executablePath: process.env.CHROME_PATH
             };
+            console.log(`[GledajCrtace] Using CHROME_PATH: ${process.env.CHROME_PATH}`);
+        } else {
+            console.log(`[GledajCrtace] No CHROME_PATH set, using default`);
         }
 
         const { browser: b, page } = await realBrowser.connect(connectOptions);
         browser = b;
+
+        console.log(`[GledajCrtace] Browser launched successfully`);
 
         await page.goto(url, { 
             waitUntil: 'domcontentloaded',
@@ -45,6 +50,7 @@ async function extractGledajCrtace(url) {
             }
         });
 
+        // Wait for m3u8
         const maxWait = 15000;
         const start = Date.now();
 
