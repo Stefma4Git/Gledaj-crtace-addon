@@ -1,5 +1,5 @@
 {
-  "name": "bytewatch-stremio-addon",
+  "name": "Gledaj-crtace-addon",
   "version": "1.0.0",
   "description": "A Node.js app to scrape streaming websites for links and provide it to Stremio",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "dev": "vercel dev"
   },
   "keywords": [],
-  "author": "93bx",
+  "author": "Stefma",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.14.0",
