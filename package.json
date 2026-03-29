@@ -12,31 +12,6 @@
     "puppeteer-real-browser": "^2.0.0"
   },
   "engines": {
-    "node": "18.x || 20.x"
-  }
-}{
-  "name": "bytewatch-stremio-addon",
-  "version": "1.0.0",
-  "description": "A Node.js app to scrape streaming websites for links and provide it to Stremio",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "postinstall": "npx puppeteer browsers install chrome",
-    "dev": "vercel dev"
-  },
-  "keywords": [],
-  "author": "93bx",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^1.14.0",
-    "cheerio": "^1.2.0",
-    "node-cache": "^5.1.2",
-    "puppeteer-real-browser": "^1.4.2",
-    "stremio-addon-sdk": "^1.1.6",
-    "winston": "^3.17.0",
-    "xvfb": "^0.4.0"
-  },
-  "devDependencies": {
-    "@vercel/node": "^3.0.0"
+    "node": "20.x"
   }
 }
