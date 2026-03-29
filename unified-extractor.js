@@ -1,4 +1,4 @@
-// unified-extractor.js - Final version for Render
+// unified-extractor.js - Final Render version with auto-installed Chrome
 const puppeteer = require('puppeteer-core');
 
 async function extractGledajCrtace(url) {
@@ -6,8 +6,11 @@ async function extractGledajCrtace(url) {
 
     let browser;
     try {
+        // Use Chrome installed by postinstall script
+        const browserPath = puppeteer.executablePath();
+
         browser = await puppeteer.launch({
-            executablePath: '/usr/bin/google-chrome',   // Render's default Chrome
+            executablePath: browserPath,
             headless: true,
             args: [
                 '--no-sandbox',
