@@ -1,47 +1,27 @@
-// unified-extractor.js - Using Chromium for Render
-const realBrowser = require('puppeteer-real-browser');
+// unified-extractor.js - Using puppeteer-core + system Chromium (better for Render)
+const puppeteer = require('puppeteer-core');
 
 async function extractGledajCrtace(url) {
     console.log(`[GledajCrtace] Starting extraction for: ${url}`);
 
     let browser;
     try {
-        const connectOptions = {
+        browser = await puppeteer.launch({
+            executablePath: '/usr/bin/chromium-browser',
             headless: true,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--window-size=1920,1080',
-                '--disable-web-security'
+                '--window-size=1920,1080'
             ]
-        };
-
-        // Try Chromium path first
-        if (process.env.CHROME_PATH) {
-            connectOptions.customConfig = {
-                executablePath: process.env.CHROME_PATH
-            };
-            console.log(`[GledajCrtace] Using CHROME_PATH: ${process.env.CHROME_PATH}`);
-        } else {
-            console.log(`[GledajCrtace] No CHROME_PATH set, using default`);
-        }
-
-        const { browser: b, page } = await realBrowser.connect(connectOptions);
-        browser = b;
-
-        console.log(`[GledajCrtace] Browser launched successfully`);
-
-        await page.goto(url, { 
-            waitUntil: 'domcontentloaded',
-            timeout: 30000 
         });
 
-        console.log(`[GledajCrtace] Page loaded, waiting for m3u8...`);
+        const page = await browser.newPage();
 
+        // Intercept requests to catch m3u8
         let m3u8Found = null;
-
         page.on('request', (request) => {
             const reqUrl = request.url();
             if (reqUrl.includes('.m3u8')) {
@@ -50,7 +30,14 @@ async function extractGledajCrtace(url) {
             }
         });
 
-        // Wait for m3u8
+        await page.goto(url, { 
+            waitUntil: 'domcontentloaded',
+            timeout: 30000 
+        });
+
+        console.log(`[GledajCrtace] Page loaded, waiting for m3u8...`);
+
+        // Wait up to 15 seconds for m3u8
         const maxWait = 15000;
         const start = Date.now();
 
