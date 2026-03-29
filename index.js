@@ -207,11 +207,17 @@ builder.defineStreamHandler(async (args) => {
     const id = args.id;
     logger.info(`[Stream] Episode request: ${id}`);
 
-    let watchUrl = id.startsWith('crtace:') ? `https://gledajcrtace.org/${id.replace('crtace:', '')}` : id;
+    // Fix: Make sure we always pass a full URL
+    let watchUrl = id;
+    if (id.startsWith('crtace:')) {
+        watchUrl = `https://gledajcrtace.org/${id.replace('crtace:', '')}`;
+    }
+
     logger.info(`[Stream] Using watch URL: ${watchUrl}`);
 
     try {
-        const streams = await runExtractor('crtace', 'series', watchUrl);
+        // Correct call - pass only the type and url
+        const streams = await runExtractor(watchUrl);
         return { streams: streams || [] };
     } catch (err) {
         logger.error(`[Stream] Error: ${err.message}`);
