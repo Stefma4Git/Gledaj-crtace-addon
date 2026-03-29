@@ -9,7 +9,8 @@
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
     "stremio-addon-sdk": "^1.6.0",
-    "puppeteer-real-browser": "^1.4.4"
+    "puppeteer-real-browser": "^1.4.4",
+    "winston": "^3.17.0"
   },
   "engines": {
     "node": "20.x"
