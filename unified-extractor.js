@@ -1,4 +1,4 @@
-// unified-extractor.js - Fixed for Render + puppeteer-real-browser
+// unified-extractor.js
 const realBrowser = require('puppeteer-real-browser');
 
 async function extractGledajCrtace(url) {
@@ -13,11 +13,9 @@ async function extractGledajCrtace(url) {
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-accelerated-2d-canvas',
-                '--disable-gpu',
-                '--window-size=1920,1080'
+                '--disable-gpu'
             ],
             customConfig: {
-                // This helps on Render
                 executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome'
             }
         });
@@ -29,32 +27,30 @@ async function extractGledajCrtace(url) {
             timeout: 30000 
         });
 
-        console.log(`[GledajCrtace] Page loaded (domcontentloaded), waiting for m3u8...`);
+        console.log(`[GledajCrtace] Page loaded, waiting for m3u8...`);
 
-        // Intercept network requests to catch m3u8
         let m3u8Found = null;
 
         page.on('request', (request) => {
-            const url = request.url();
-            if (url.includes('.m3u8')) {
-                console.log(`[GledajCrtace] ✅ FOUND m3u8: ${url}`);
-                m3u8Found = url;
+            const reqUrl = request.url();
+            if (reqUrl.includes('.m3u8')) {
+                console.log(`[GledajCrtace] ✅ FOUND m3u8: ${reqUrl}`);
+                m3u8Found = reqUrl;
             }
         });
 
-        // Wait up to 15 seconds for m3u8
         const maxWait = 15000;
-        const startTime = Date.now();
+        const start = Date.now();
 
-        while (Date.now() - startTime < maxWait) {
+        while (Date.now() - start < maxWait) {
             if (m3u8Found) {
                 await browser.close();
-                return [{ url: m3u8Found, title: 'HLS Stream', behaviorHints: { notWebReady: true } }];
+                return [{ url: m3u8Found }];
             }
             await new Promise(r => setTimeout(r, 800));
         }
 
-        console.log(`[GledajCrtace] Extraction finished. m3u8 found: false`);
+        console.log(`[GledajCrtace] No m3u8 found after waiting`);
         await browser.close();
         return [];
 
