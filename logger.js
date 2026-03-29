@@ -1,4 +1,4 @@
-// logger.js - Simple logger for Render
+// logger.js
 const winston = require('winston');
 
 const logger = winston.createLogger({
