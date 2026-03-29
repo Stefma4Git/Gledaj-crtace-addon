@@ -1,4 +1,4 @@
-// unified-extractor.js - Using puppeteer-core + system Chromium (better for Render)
+// unified-extractor.js - Works on Render with auto-installed Chrome
 const puppeteer = require('puppeteer-core');
 
 async function extractGledajCrtace(url) {
@@ -6,8 +6,8 @@ async function extractGledajCrtace(url) {
 
     let browser;
     try {
+        // Use Chrome installed by postinstall
         browser = await puppeteer.launch({
-            executablePath: '/usr/bin/chromium-browser',
             headless: true,
             args: [
                 '--no-sandbox',
@@ -20,8 +20,8 @@ async function extractGledajCrtace(url) {
 
         const page = await browser.newPage();
 
-        // Intercept requests to catch m3u8
         let m3u8Found = null;
+
         page.on('request', (request) => {
             const reqUrl = request.url();
             if (reqUrl.includes('.m3u8')) {
@@ -37,7 +37,6 @@ async function extractGledajCrtace(url) {
 
         console.log(`[GledajCrtace] Page loaded, waiting for m3u8...`);
 
-        // Wait up to 15 seconds for m3u8
         const maxWait = 15000;
         const start = Date.now();
 
