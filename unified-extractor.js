@@ -1,4 +1,4 @@
-// unified-extractor.js
+// unified-extractor.js - Fixed for Render
 const realBrowser = require('puppeteer-real-browser');
 
 async function extractGledajCrtace(url) {
@@ -6,20 +6,26 @@ async function extractGledajCrtace(url) {
 
     let browser;
     try {
-        const { browser: b, page } = await realBrowser.connect({
+        const connectOptions = {
             headless: true,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-accelerated-2d-canvas',
-                '--disable-gpu'
-            ],
-            customConfig: {
-                executablePath: process.env.CHROME_PATH || '/usr/bin/google-chrome'
-            }
-        });
+                '--disable-gpu',
+                '--window-size=1920,1080'
+            ]
+        };
 
+        // Try to use CHROME_PATH if set
+        if (process.env.CHROME_PATH) {
+            connectOptions.customConfig = {
+                executablePath: process.env.CHROME_PATH
+            };
+        }
+
+        const { browser: b, page } = await realBrowser.connect(connectOptions);
         browser = b;
 
         await page.goto(url, { 
